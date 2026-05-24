@@ -1,4 +1,4 @@
-"""
+
 Crear un programa que calcule e imprima cualquier tabla de multiplicar
 
   Restricciones: 
@@ -18,13 +18,10 @@ print(f'{mul} x 8 = {mul*8}')
 print(f'{mul} x 9 = {mul*9}')
 print(f'{mul} x 10 = {mul*10}')
 print("----------Tabla terminada------------")
-"""
 
 
 
-
-"""
-  Crear un programa que calcule e imprima cualquier tabla de multiplicar
+Crear un programa que calcule e imprima cualquier tabla de multiplicar
 
   Restricciones: 
   1.- con estructuras de control con for con decremento de 10
@@ -36,14 +33,9 @@ mul=int(input("Introduce el numero que quieras para crear la tabla de multiplica
 for num in range(100,0,-10):
   print(f'{mul} X {num} = {mul*num}')
 
-"""
 
 
 
-
-
-
-"""
 Crear un programa que calcule e imprima cualquier tabla de multiplicar
 
   Restricciones: 
@@ -57,20 +49,15 @@ num=1
 while num < 10 and num > 0:
   num+=1
   print(f'{mul} X {num} = {mul*num}')
-"""
 
 
 
 
-
-
-
-"""
 Crear un programa que calcule e imprima cualquier tabla de multiplicar
 
-  Restricciones: 
-  1.- con estructuras de control con while con Decrementos de 10
-  2.- Sin funciones
+Restricciones: 
+1.- con estructuras de control con while con Decrementos de 10
+2.- Sin funciones
 
 print("\033c")
 mul=int(input("Introduce el numero que quieras para crear la tabla de multiplicar: "))
@@ -78,16 +65,11 @@ num=100
 while num >= 100 and num > 0:
   num-=10
   print(f'{mul} X {num} = {mul*num}')
-"""
 
 
 
 
 
-
-
-
-"""
 Crear un programa que calcule e imprima cualquier tabla de multiplicar
 
   Restricciones: 
@@ -109,20 +91,3 @@ def process():
 
 mul=int(input("Introduce el numero que quieras para crear la tabla de multiplicar: "))
 process()
-"""
-
-
-
-
-
-
-
-"""
-Crear un programa que calcule e imprima cualquier tabla de multiplicar
-
-  Restricciones: 
-  1.- con estructuras de control
-  2.- con funciones
-
-"""
-
