@@ -4,7 +4,7 @@ def insertar(usuario, conexionBD):
     try:
         if conexionBD != None:
             cursor = conexionBD.cursor()
-            cursor.execute("INSERT INTO usuario VALUES (NULL,%s)", (usuario,))
+            cursor.execute("INSERT INTO usuario VALUES (NULL,%s,%s)", (usuario,correo,))
             conexionBD.commit()
             return True
         else:

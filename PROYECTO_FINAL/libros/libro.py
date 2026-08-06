@@ -12,7 +12,7 @@ def menuPrincialLibros():
 Ｇｅｓｔｉｏｎ ｄｅ Ｌｉｂｒｏｓ
     """)
 
-    opcion = input("\n\t1.- Agregar\n\t2.- Borrar\n\t3.- Modificar\n\t4.- Mostrar\n\t5.- Buscar\n\t6.- Limpiar\n\t7.- Salir\n\t\tEscribe un opcion: ").strip()
+    opcion = input("\n\t1.- Agregar\n\t2.- Borrar\n\t3.- Modificar\n\t4.- Mostrar\n\t5.- Buscar\n\t6.- Limpiar\n\t7.- Exportar Datos a Pdf\n\t8.- Salir\n\t\tEscribe un opcion: ").strip()
     return opcion
 
 
@@ -122,7 +122,7 @@ def modificarLibros(conexionBD):
 
 def menuLibros(conexionBD):
     opc = ""
-    while opc != "7":
+    while opc != "8":
         funciones.borrarPantalla()
         opc = menuPrincialLibros()
         match opc:
@@ -139,7 +139,23 @@ def menuLibros(conexionBD):
             case "6":
                 limpiarLibros(conexionBD)
             case "7":
+                exportarLibros(conexionBD)
+            case "8":
                 funciones.borrarPantalla()
                 return
             case _:
                 funciones.opcionInvalida()
+
+def exportarLibros(conexionBD):
+    print("\n\t\t...:::: EXPORTAR LIBROS A PDF ::::...\n")
+    print("....::::Los datos ingresados de los libros se exportaran a pdf::::....")
+    libros = crudLi.consultar(conexionBD)
+    if len(libros) > 0:
+        respuesta = funciones.exportLibrosPdf(conexionBD)
+        if respuesta:
+            funciones.accionExitosa()
+        else:
+            funciones.accionNoExitosa()
+    else:
+        input("...¡No hay libros que exportar!...")
+    funciones.espereTecla()

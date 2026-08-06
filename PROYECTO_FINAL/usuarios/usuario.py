@@ -19,7 +19,11 @@ def menuPrincUsuario():
 def agregarUsuario(conexionBD):
     print("\n\t\t...:::: AGREGAR USUARIO ::::...\n")
     usuario = input("Introducir el nombre de usuario: ").upper().strip()
-    respuesta = crudUs.insertar(usuario, conexionBD)
+    correo=input("Introducir el correo(Gmail): ").lower().strip()
+    while not funciones.ValidarGmail(correo):
+        input("\t\t...Correo invalido, debe de ser un correo @gmail.com...")
+        correo=input("Introducir el correo(Gmail): ")
+    respuesta = crudUs.insertar(usuario,correo, conexionBD)
     if respuesta:
         funciones.accionExitosa()
     else:
