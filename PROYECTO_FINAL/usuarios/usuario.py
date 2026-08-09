@@ -12,17 +12,38 @@ def menuPrincUsuario():
                                                
 Ｇｅｓｔｉóｎ ｄｅ ｕｓｕａｒｉｏｓ
 """)
-    opcion = input("\n\t1.- Agregar\n\t2.- Borrar\n\t3.- Modificar\n\t4.- Mostrar\n\t5.- Buscar\n\t6.- Limpiar\n\t7.- Salir\n\t\tEscribe un opcion: ").strip()
+    opcion = input(
+        "\n    ╔══════════════════════════════╗"
+        "\n    ║      📋 MENÚ PRINCIPAL 📋    ║"
+        "\n    ╚══════════════════════════════╝"
+        "\n"
+        "\n           1.- ➕ Agregar"
+        "\n    ──────────────────────────────"
+        "\n           2.- 🗑️  Borrar"
+        "\n    ──────────────────────────────"
+        "\n           3.- ✏️  Modificar"
+        "\n    ──────────────────────────────"
+        "\n           4.- 📄 Mostrar"
+        "\n    ──────────────────────────────"
+        "\n           5.- 🔍 Buscar"
+        "\n    ──────────────────────────────"
+        "\n           6.- 🧹 Limpiar"
+        "\n    ──────────────────────────────"
+        "\n           7.- 🚪 Salir"
+        "\n    ──────────────────────────────"
+        "\n                         Escribe una opción: "
+    ).strip()
     return opcion
 
 
 def agregarUsuario(conexionBD):
-    print("\n\t\t...:::: AGREGAR USUARIO ::::...\n")
-    usuario = input("Introducir el nombre de usuario: ").upper().strip()
-    correo=input("Introducir el correo(Gmail): ").lower().strip()
+    funciones.borrarPantalla()
+    print("\n\t\t...:::: 👤 AGREGAR USUARIO ::::...\n")
+    usuario = input("✏️  Introducir el nombre de usuario: ").upper().strip()
+    correo=input("📧 Introducir el correo (Gmail): ").lower().strip()
     while not funciones.ValidarGmail(correo):
-        input("\t\t...Correo invalido, debe de ser un correo @gmail.com...")
-        correo=input("Introducir el correo(Gmail): ")
+        input("\t\t⚠️  ...Correo inválido, debe de ser un correo @gmail.com...")
+        correo=input("📧 Introducir el correo (Gmail): ")
     respuesta = crudUs.insertar(usuario,correo, conexionBD)
     if respuesta:
         funciones.accionExitosa()
@@ -32,41 +53,41 @@ def agregarUsuario(conexionBD):
 
 
 def mostrarUsuarios(conexionBD):
-    print("\n\t\t...:::: MOSTRAR USUARIOS ::::...\n")
+    print("\n\t\t...:::: 📋 MOSTRAR USUARIOS ::::...\n")
     usuarios = crudUs.consultar(conexionBD)
     if len(usuarios) > 0:
-        print("\tCodigo\t\tUsuario\n")
+        print("\t🆔 Codigo\t\t👤 Usuario\n")
         for i in usuarios:
             print(f"\t{i[0]}\t\t{i[1]}")
     else:
-        input("...¡No hay usuarios que mostrar!...")
+        input("⚠️  ...¡No hay usuarios que mostrar!...")
     funciones.espereTecla()
 
 
 def buscarUsuario(conexionBD):
-    print("\n\t\t...:::: BUSCAR USUARIO ::::...\n")
-    usuario = int(input("Escribir el nombre del usuario: ")).strip()
+    print("\n\t\t...:::: 🔍 BUSCAR USUARIO ::::...\n")
+    usuario =input("✏️  Escribir el nombre del usuario: ").strip()
     usuarios = crudUs.buscar(usuario, conexionBD)
     if len(usuarios) > 0:
-        print("\tCodigo\t\tUsuario\n")
+        print("\t🆔 Codigo\t\t👤 Usuario\n")
         for i in usuarios:
             print(f"\t{i[0]}\t\t{i[1]}")
     else:
-        input("...¡No se encontro el usuario que estas buscando!...")
+        input("⚠️  ...¡No se encontró el usuario que estás buscando!...")
     funciones.espereTecla()
 
 
 def borrarUsuario(conexionBD):
-    print("\n\t\t...:::: BORRAR USUARIO ::::...\n")
-    usuario = input("Escribir el nombre del usuario: ").upper().strip()
+    print("\n\t\t...:::: 🗑️  BORRAR USUARIO ::::...\n")
+    usuario = input("✏️  Escribir el nombre del usuario: ").upper().strip()
     usuarios = crudUs.buscar(usuario, conexionBD)
     if len(usuarios) > 0:
-        print("\tCodigo\t\tUsuario\n")
+        print("\t🆔 Codigo\t\t👤 Usuario\n")
         for i in usuarios:
             print(f"\t{i[0]}\t\t{i[1]}")
         opc = ""
         while opc != "si" and opc != "no":
-            opc = input("¿Deseas borrar al usuario (Si/No)? ").lower().strip()
+            opc = input("❓ ¿Deseas borrar al usuario (Si/No)? ").lower().strip()
         if opc == "si":
             respuesta = crudUs.borrar(usuario, conexionBD)
             if respuesta:
@@ -74,30 +95,30 @@ def borrarUsuario(conexionBD):
             else:
                 funciones.accionNoExitosa()
     else:
-        input("...¡No se encontro el usuario que estas buscando!...")
+        input("⚠️  ...¡No se encontró el usuario que estás buscando!...")
     funciones.espereTecla()
 
 
 def modificarUsuario(conexionBD):
-    print("\n\t\t...:::: MODIFICAR USUARIO ::::...\n")
-    usuario = input("Escribir el nombre del usuario: ").upper().strip()
+    print("\n\t\t...:::: ✏️  MODIFICAR USUARIO ::::...\n")
+    usuario = input("✏️  Escribir el nombre del usuario: ").upper().strip()
     usuarios = crudUs.buscar(usuario, conexionBD)
     if len(usuarios) > 0:
-        print("\tCodigo\t\tUsuario\n")
+        print("\t🆔 Codigo\t\t👤 Usuario\n")
         for i in usuarios:
             print(f"\t{i[0]}\t\t{i[1]}")
         opc = ""
         while opc != "si" and opc != "no":
-            opc = input("¿Deseas modificar al usuario (Si/No)? ").lower().strip()
+            opc = input("❓ ¿Deseas modificar al usuario (Si/No)? ").lower().strip()
         if opc == "si":
-            usuario2 = input("Escribir el nuevo nombre del usuario: ").upper().strip()
+            usuario2 = input("✏️  Escribir el nuevo nombre del usuario: ").upper().strip()
             respuesta = crudUs.actualizar(usuario, usuario2, conexionBD)
             if respuesta:
                 funciones.accionExitosa()
             else:
                 funciones.accionNoExitosa()
     else:
-        input("...¡No se encontro el usuario que estas buscando!...")
+        input("⚠️  ...¡No se encontró el usuario que estás buscando!...")
     funciones.espereTecla()
 
 
@@ -106,7 +127,7 @@ def limpiarUsuarios(conexionBD):
     if len(usuarios) > 0:
         opc = ""
         while opc != "si" and opc != "no":
-            opc = input("¿Deseas borrar TODOS los usuarios (Si/No)? ").lower().strip()
+            opc = input("❓ ¿Deseas borrar TODOS los usuarios (Si/No)? ").lower().strip()
         if opc == "si":
             respuesta = crudUs.vaciar(conexionBD)
             if respuesta:
@@ -114,7 +135,7 @@ def limpiarUsuarios(conexionBD):
             else:
                 funciones.accionNoExitosa()
     else:
-        input("...¡No hay usuarios que borrar!...")
+        input("⚠️  ...¡No hay usuarios que borrar!...")
     funciones.espereTecla()
 
 

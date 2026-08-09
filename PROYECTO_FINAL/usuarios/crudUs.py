@@ -1,6 +1,6 @@
 import funciones
 
-def insertar(usuario, conexionBD):
+def insertar(usuario, correo, conexionBD):
     try:
         if conexionBD != None:
             cursor = conexionBD.cursor()

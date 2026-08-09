@@ -3,32 +3,37 @@ from fpdf import FPDF
 import os
 import re
 
+CONFIG_BD = {
+    "host": "127.0.0.1",
+    "user": "root",
+    "password": "",
+    "database": "bookso"
+}
+
 def borrarPantalla():
     print("\033c")
-    
+
 def espereTecla():
-    input("\n\t...¡Oprima cualquier tecla para continuar!...")
-    
+    input("\n    ⏳ ...Presiona cualquier tecla para continuar... ⏳\n")
+
 def opcionInvalida():
-    input("\n\t...¡Opcion invalidad, por favor verifique !...")
-    
+    input("\n    ⚠️  ...Opción inválida, por favor verifique... ⚠️\n")
+
 def accionExitosa():
-    input("\n\t...¡Accion Realizada con Exito !...")
+    input("\n    ✅ ...Acción realizada con éxito... ✅\n")
 
 def accionNoExitosa():
-    input("\n\t...¡No fue posible realiazr esta accion !...")
+    input("\n    ❌ ...No fue posible realizar esta acción... ❌\n")
 
 def terminarSistema():
-    input("\n\t\t...:::: GRACIAS POR UTILIZAR NUESTRO SISTEMA ::::...\n")
-
+    print(
+        "\n    ╔══════════════════════════════════════════╗"
+        "\n    ║   GRACIAS POR UTILIZAR NUESTRO SISTEMA   ║"
+        "\n    ╚══════════════════════════════════════════╝\n"
+    )
 def conectar():
     try:
-        conexion = mysql.connector.connect(
-            host="127.0.0.1",
-            user="root",
-            password="",
-            database="bookso"
-        )
+        conexion = mysql.connector.connect(**CONFIG_BD)
         return conexion
     except Exception as e:
         print("ERROR DE CONEXION:", e)
@@ -44,12 +49,20 @@ def menuPrincipal():
         Sistema de Gestión de Libros
                   y reseñas de usuarios
     """)
-    print("=== MENÚ PRINCIPAL ===")
-    print("1. Libros")
-    print("2. Usuarios")
-    print("3. Reseñas")
-    print("4. Salir")
-    return input("Elige una opción: ")
+    print(
+        "\n    ╔══════════════════════════════╗"
+        "\n    ║    📚 MENÚ PRINCIPAL 📚      ║"
+        "\n    ╚══════════════════════════════╝"
+    )
+    print("             1.- 📖 Libros")
+    print("    ──────────────────────────────")
+    print("             2.- 👤 Usuarios")
+    print("    ──────────────────────────────")
+    print("             3.- ⭐ Reseñas")
+    print("    ──────────────────────────────")
+    print("             4.- 🚪 Salir")
+    print("    ──────────────────────────────")
+    return input("       Elige una opción: ")
 
 def exportLibrosPdf(conexionBD, ruta="exportados"):
     os.makedirs(ruta, exist_ok=True)
@@ -85,6 +98,62 @@ def exportLibrosPdf(conexionBD, ruta="exportados"):
     print(f"\n\t...¡Archivo generado en: {os.path.abspath(archivoRuta)}!...")
     return True
 
-def ValidarGmail(conexionBD):
-    patron = r'^[\w,+-]+@gmail\.com$'
-    return re.match(patron, correo) is not None
+
+def exportReseñasPdf(conexionBD, ruta="exportados"):
+    os.makedirs(ruta, exist_ok=True)
+    cursor = conexionBD.cursor()
+    cursor.execute("""
+        SELECT l.ID, l.libro, u.usuario, r.titulo, r.reseña
+        FROM reseñas r
+        JOIN libros l ON r.id_libro = l.ID
+        JOIN usuario u ON r.id_usuario = u.id
+        ORDER BY l.ID
+    """)
+    reseñas = cursor.fetchall()
+
+    if len(reseñas) == 0:
+        return False
+
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", "B", 16)
+    pdf.cell(0, 10, "Reporte de Reseñas", ln=True, align="C")
+    pdf.ln(5)
+
+    libroActual = None
+    contadorReseñas = 0          
+
+    for id_libro, libro, usuario, titulo, reseña in reseñas:
+        if id_libro != libroActual:
+            if libroActual is not None:                                    
+                pdf.set_font("Arial", "I", 10)                             
+                pdf.cell(0, 6, f"Total de reseñas: {contadorReseñas}", ln=True)  
+            libroActual = id_libro
+            contadorReseñas = 0   
+            pdf.ln(3)
+            pdf.set_font("Arial", "B", 13)
+            pdf.cell(0, 8, f"Libro: {libro}  (Codigo: {id_libro})", ln=True)
+            pdf.cell(0, 0, "", border="T")
+            pdf.ln(4)
+
+        pdf.set_font("Arial", "", 11)
+        pdf.multi_cell(0, 7,
+            f"Usuario: {usuario}\n"
+            f"Titulo: {titulo}\n"
+            f"Reseña: {reseña}"
+        )
+        pdf.ln(3)
+        contadorReseñas += 1     
+
+    
+    pdf.set_font("Arial", "I", 10)
+    pdf.cell(0, 6, f"Total de reseñas: {contadorReseñas}", ln=True)
+
+    archivoRuta = os.path.join(ruta, "reporte_reseñas.pdf")
+    pdf.output(archivoRuta)
+    print(f"\n\t...¡Archivo generado en: {os.path.abspath(archivoRuta)}!...")
+    return True
+
+def ValidarGmail(correo):
+    PATRON = r'^[\w,+-]+@gmail\.com$'
+    return re.match(PATRON, correo) is not None
