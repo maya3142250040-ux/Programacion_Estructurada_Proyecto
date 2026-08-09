@@ -1,10 +1,10 @@
 import funciones
 
-def insertar(usuario, correo, conexionBD):
+def insertar(actor, conexionBD):
     try:
         if conexionBD != None:
             cursor = conexionBD.cursor()
-            cursor.execute("INSERT INTO usuario VALUES (NULL,%s,%s)", (usuario,correo,))
+            cursor.execute("INSERT INTO actores VALUES (NULL,%s)", (actor,))
             conexionBD.commit()
             return True
         else:
@@ -18,7 +18,7 @@ def consultar(conexionBD):
     try:
         if conexionBD != None:
             cursor = conexionBD.cursor()
-            cursor.execute("SELECT * FROM usuario")
+            cursor.execute("SELECT * FROM actores")
             return cursor.fetchall()
         else:
             return []
@@ -27,11 +27,11 @@ def consultar(conexionBD):
         return []
 
 
-def buscar(usuario, conexionBD):
+def buscar(actor, conexionBD):
     try:
         if conexionBD != None:
             cursor = conexionBD.cursor()
-            cursor.execute("SELECT * FROM usuario where usuario=%s", (usuario,))
+            cursor.execute("SELECT * FROM actores where nombre=%s", (actor,))
             return cursor.fetchall()
         else:
             return []
@@ -44,7 +44,7 @@ def vaciar(conexionBD):
     try:
         if conexionBD != None:
             cursor = conexionBD.cursor()
-            cursor.execute("truncate usuario")
+            cursor.execute("truncate actores")
             conexionBD.commit()
             return True
         else:
@@ -54,11 +54,11 @@ def vaciar(conexionBD):
         return False
 
 
-def borrar(usuario, conexionBD):
+def borrar(actor, conexionBD):
     try:
         if conexionBD != None:
             cursor = conexionBD.cursor()
-            cursor.execute("delete from usuario where usuario=%s", (usuario,))
+            cursor.execute("delete from actores where nombre=%s", (actor,))
             conexionBD.commit()
             return True
         else:
@@ -68,14 +68,11 @@ def borrar(usuario, conexionBD):
         return False
 
 
-def actualizar(id_usuario, usuarioNew, correoNew, conexionBD):
+def actualizar(actorOld, actorNew, conexionBD):
     try:
         if conexionBD != None:
             cursor = conexionBD.cursor()
-            cursor.execute(
-                "update usuario set usuario=%s, correo=%s where id=%s",
-                (usuarioNew, correoNew, id_usuario)
-            )
+            cursor.execute("update actores set nombre=%s where nombre=%s", (actorNew, actorOld))
             conexionBD.commit()
             return True
         else:

@@ -53,6 +53,7 @@ def agregarUsuario(conexionBD):
 
 
 def mostrarUsuarios(conexionBD):
+    funciones.borrarPantalla()
     print("\n\t\t...:::: 📋 MOSTRAR USUARIOS ::::...\n")
     usuarios = crudUs.consultar(conexionBD)
     if len(usuarios) > 0:
@@ -65,6 +66,7 @@ def mostrarUsuarios(conexionBD):
 
 
 def buscarUsuario(conexionBD):
+    funciones.borrarPantalla()
     print("\n\t\t...:::: 🔍 BUSCAR USUARIO ::::...\n")
     usuario =input("✏️  Escribir el nombre del usuario: ").strip()
     usuarios = crudUs.buscar(usuario, conexionBD)
@@ -78,6 +80,7 @@ def buscarUsuario(conexionBD):
 
 
 def borrarUsuario(conexionBD):
+    funciones.borrarPantalla()
     print("\n\t\t...:::: 🗑️  BORRAR USUARIO ::::...\n")
     usuario = input("✏️  Escribir el nombre del usuario: ").upper().strip()
     usuarios = crudUs.buscar(usuario, conexionBD)
@@ -100,19 +103,26 @@ def borrarUsuario(conexionBD):
 
 
 def modificarUsuario(conexionBD):
+    funciones.borrarPantalla()
     print("\n\t\t...:::: ✏️  MODIFICAR USUARIO ::::...\n")
     usuario = input("✏️  Escribir el nombre del usuario: ").upper().strip()
     usuarios = crudUs.buscar(usuario, conexionBD)
     if len(usuarios) > 0:
-        print("\t🆔 Codigo\t\t👤 Usuario\n")
+        print("\t🆔 Codigo\t\t👤 Usuario\t\t📧 Correo\n")
         for i in usuarios:
-            print(f"\t{i[0]}\t\t{i[1]}")
+            print(f"\t{i[0]}\t\t{i[1]}\t\t{i[2]}")
         opc = ""
         while opc != "si" and opc != "no":
             opc = input("❓ ¿Deseas modificar al usuario (Si/No)? ").lower().strip()
         if opc == "si":
+            id_usuario = usuarios[0][0]
             usuario2 = input("✏️  Escribir el nuevo nombre del usuario: ").upper().strip()
-            respuesta = crudUs.actualizar(usuario, usuario2, conexionBD)
+
+            correo2 = input("📧 Escribir el nuevo correo: ").strip()
+            while not funciones.ValidarGmail(correo2):
+                correo2 = input("⚠️  Correo inválido, debe ser @gmail.com. Escribir de nuevo: ").strip()
+
+            respuesta = crudUs.actualizar(id_usuario, usuario2, correo2, conexionBD)
             if respuesta:
                 funciones.accionExitosa()
             else:
@@ -123,6 +133,7 @@ def modificarUsuario(conexionBD):
 
 
 def limpiarUsuarios(conexionBD):
+    funciones.borrarPantalla()
     usuarios = crudUs.consultar(conexionBD)
     if len(usuarios) > 0:
         opc = ""

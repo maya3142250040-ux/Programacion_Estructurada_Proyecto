@@ -1,10 +1,13 @@
 import funciones
 
-def insertar(usuario, correo, conexionBD):
+def insertar(nombre, categoria, clasificacion, genero, idioma, conexionBD):
     try:
         if conexionBD != None:
             cursor = conexionBD.cursor()
-            cursor.execute("INSERT INTO usuario VALUES (NULL,%s,%s)", (usuario,correo,))
+            cursor.execute(
+                "INSERT INTO peliculas VALUES (NULL,%s,%s,%s,%s,%s)",
+                (nombre, categoria, clasificacion, genero, idioma)
+            )
             conexionBD.commit()
             return True
         else:
@@ -18,7 +21,7 @@ def consultar(conexionBD):
     try:
         if conexionBD != None:
             cursor = conexionBD.cursor()
-            cursor.execute("SELECT * FROM usuario")
+            cursor.execute("select * from peliculas")
             return cursor.fetchall()
         else:
             return []
@@ -27,11 +30,11 @@ def consultar(conexionBD):
         return []
 
 
-def buscar(usuario, conexionBD):
+def buscar(peli, conexionBD):
     try:
         if conexionBD != None:
             cursor = conexionBD.cursor()
-            cursor.execute("SELECT * FROM usuario where usuario=%s", (usuario,))
+            cursor.execute("select * from peliculas where nombre=%s", (peli,))
             return cursor.fetchall()
         else:
             return []
@@ -44,7 +47,7 @@ def vaciar(conexionBD):
     try:
         if conexionBD != None:
             cursor = conexionBD.cursor()
-            cursor.execute("truncate usuario")
+            cursor.execute("truncate peliculas")
             conexionBD.commit()
             return True
         else:
@@ -54,11 +57,11 @@ def vaciar(conexionBD):
         return False
 
 
-def borrar(usuario, conexionBD):
+def borrar(peli, conexionBD):
     try:
         if conexionBD != None:
             cursor = conexionBD.cursor()
-            cursor.execute("delete from usuario where usuario=%s", (usuario,))
+            cursor.execute("delete from peliculas where nombre=%s", (peli,))
             conexionBD.commit()
             return True
         else:
@@ -68,13 +71,13 @@ def borrar(usuario, conexionBD):
         return False
 
 
-def actualizar(id_usuario, usuarioNew, correoNew, conexionBD):
+def actualizar(peli, nombre, categoria, clasificacion, genero, idioma, conexionBD):
     try:
         if conexionBD != None:
             cursor = conexionBD.cursor()
             cursor.execute(
-                "update usuario set usuario=%s, correo=%s where id=%s",
-                (usuarioNew, correoNew, id_usuario)
+                "update peliculas set nombre=%s, categoria=%s, clasificacion=%s, genero=%s, idioma=%s where nombre=%s",
+                (nombre, categoria, clasificacion, genero, idioma, peli)
             )
             conexionBD.commit()
             return True

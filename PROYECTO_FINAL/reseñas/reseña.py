@@ -42,6 +42,7 @@ def menuPrincReseñas():
 
 
 def agregarReseña(conexionBD):
+    funciones.borrarPantalla()
     print("\n\t\t...:::: ⭐ AGREGAR RESEÑA ::::...\n")
     libro = input("📖 Introduce el libro a reseñar: ").upper().strip()
     libros = crudLi.buscar(libro, conexionBD)
@@ -75,6 +76,7 @@ def agregarReseña(conexionBD):
 
 
 def mostrarReseñas(conexionBD):
+    funciones.borrarPantalla()
     print("\n\t\t...:::: 📋 MOSTRAR RESEÑAS ::::...\n")
     reseñas = crudRe.consultar(conexionBD)
     if len(reseñas) > 0:
@@ -87,6 +89,7 @@ def mostrarReseñas(conexionBD):
 
 
 def seleccionarReseña(conexionBD):
+    funciones.borrarPantalla()
     libro = input("📖 Escribir el nombre del libro: ").upper().strip()
     libros = crudLi.buscar(libro, conexionBD)
     if len(libros) == 0:
@@ -108,6 +111,7 @@ def seleccionarReseña(conexionBD):
 
 
 def buscarReseña(conexionBD):
+    funciones.borrarPantalla()
     print("\n\t\t...:::: 🔍 BUSCAR RESEÑA ::::...\n")
     id_reseña = seleccionarReseña(conexionBD)
     if id_reseña:
@@ -121,6 +125,7 @@ def buscarReseña(conexionBD):
 
 
 def modificarReseña(conexionBD):
+    funciones.borrarPantalla()
     print("\n\t\t...:::: ✏️  MODIFICAR RESEÑA ::::...\n")
     id_reseña = seleccionarReseña(conexionBD)
     if id_reseña:
@@ -145,6 +150,7 @@ def modificarReseña(conexionBD):
 
 
 def borrarReseña(conexionBD):
+    funciones.borrarPantalla()
     print("\n\t\t...:::: 🗑️  BORRAR RESEÑA ::::...\n")
     id_reseña = seleccionarReseña(conexionBD)
     if id_reseña:
@@ -167,6 +173,7 @@ def borrarReseña(conexionBD):
 
 
 def limpiarReseñas(conexionBD):
+    funciones.borrarPantalla()
     reseñas = crudRe.consultar(conexionBD)
     if len(reseñas) > 0:
         opc = ""
@@ -211,6 +218,7 @@ def menuReseñas(conexionBD):
 
 
 def exportarReseñas(conexionBD):
+    funciones.borrarPantalla()
     print("\n\t\t...:::: 📄 EXPORTAR RESEÑAS DE LIBROS A PDF ::::...\n")
     print("....::::📤 Los datos ingresados de los libros se exportarán a PDF::::....")
     reseñas = crudRe.consultar(conexionBD)

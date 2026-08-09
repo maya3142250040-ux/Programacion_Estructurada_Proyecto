@@ -38,6 +38,7 @@ def menuPrincialLibros():
 
 
 def agregarLibros(conexionBD):
+    funciones.borrarPantalla()
     print("\n\t\t...:::: 📚 AGREGAR LIBRO ::::...\n")
     libro = input("📖 Introducir el nombre del libro: ").upper().strip()
     autor = input("✍️  Introducir el autor: ").upper().strip()
@@ -52,6 +53,7 @@ def agregarLibros(conexionBD):
 
 
 def mostrarLibros(conexionBD):
+    funciones.borrarPantalla()
     print("\n\t\t...:::: 📋 MOSTRAR LIBROS ::::...\n")
     libros = crudLi.consultar(conexionBD)
     if len(libros) > 0:
@@ -64,6 +66,7 @@ def mostrarLibros(conexionBD):
 
 
 def limpiarLibros(conexionBD):
+    funciones.borrarPantalla()
     libros = crudLi.consultar(conexionBD)
     if len(libros) > 0:
         opc = ""
@@ -81,6 +84,7 @@ def limpiarLibros(conexionBD):
 
 
 def buscarLibros(conexionBD):
+    funciones.borrarPantalla()
     print("\n\t\t...:::: 🔍 BUSCAR LIBROS ::::...\n")
     libro = input("✏️  Escribir el nombre del Libro: ").upper().strip()
     libros = crudLi.buscar(libro, conexionBD)
@@ -94,6 +98,7 @@ def buscarLibros(conexionBD):
 
 
 def borrarLibros(conexionBD):
+    funciones.borrarPantalla()
     print("\n\t\t...:::: 🗑️  BORRAR LIBROS ::::...\n")
     libro = input("✏️  Escribir el nombre del Libro: ").upper().strip()
     libros = crudLi.buscar(libro, conexionBD)
@@ -116,6 +121,7 @@ def borrarLibros(conexionBD):
 
 
 def modificarLibros(conexionBD):
+    funciones.borrarPantalla()
     print("\n\t\t...:::: ✏️  MODIFICAR LIBROS ::::...\n")
     libro_old = input("✏️  Escribir el nombre del libro: ").upper().strip()
     libros = crudLi.buscar(libro_old, conexionBD)
@@ -168,6 +174,7 @@ def menuLibros(conexionBD):
                 funciones.opcionInvalida()
 
 def exportarLibros(conexionBD):
+    funciones.borrarPantalla()
     print("\n\t\t...:::: 📄 EXPORTAR LIBROS A PDF ::::...\n")
     print("....::::📤 Los datos ingresados de los libros se exportarán a PDF::::....")
     libros = crudLi.consultar(conexionBD)

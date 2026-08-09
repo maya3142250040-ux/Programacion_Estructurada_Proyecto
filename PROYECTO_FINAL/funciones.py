@@ -34,6 +34,7 @@ def terminarSistema():
 def conectar():
     try:
         conexion = mysql.connector.connect(**CONFIG_BD)
+        conexion.autocommit = True
         return conexion
     except Exception as e:
         print("ERROR DE CONEXION:", e)
